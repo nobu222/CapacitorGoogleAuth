@@ -12,10 +12,8 @@ public class GoogleAuth: CAPPlugin {
     let googleSignIn: GIDSignIn = GIDSignIn.sharedInstance();
     
     public override func load() {
-        guard let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") else {return}
-        guard let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] else {return}
-        guard let clientId = dict["CLIENT_ID"] as? String else {return}
-        
+        let clientId = getConfigValue("clientId") as? String ?? "ADD_IN_CAPACITOR_CONFIG_JSON"
+
         googleSignIn.clientID = clientId;
         googleSignIn.delegate = self;
         googleSignIn.uiDelegate = self;
