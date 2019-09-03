@@ -8,6 +8,7 @@ import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.Config;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -21,12 +22,13 @@ import org.json.JSONException;
 
 @NativePlugin(requestCodes = GoogleAuth.RC_SIGN_IN)
 public class GoogleAuth extends Plugin {
+  public static final String CONFIG_KEY_PREFIX = "plugins.GoogleAuth.";
   static final int RC_SIGN_IN = 1337;
   private GoogleSignInClient googleSignInClient;
 
   @Override
   public void load() {
-    String clientId = this.getContext().getString(R.string.server_client_id);
+    String clientId = Config.getString(CONFIG_KEY_PREFIX+"serverClientId", "ADD_IN_CAPACITOR_CONFIG_JSON");
     GoogleSignInOptions.Builder googleSignInBuilder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
       .requestIdToken(clientId)
       .requestEmail();
